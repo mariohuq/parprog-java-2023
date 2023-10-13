@@ -1,0 +1,15 @@
+# Ignore everything
+*
+!.gitignore
+
+# But not Java files...
+!*.java
+
+# And docs
+!*.md
+
+# And not Maven files...
+!pom.xml
+
+# ...even if they are in subdirectories
+!*/
