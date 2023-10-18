@@ -1,38 +1,32 @@
 package ru.spbstu.telematics.java;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Collections;
+import java.util.Arrays;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+
+import ru.spbstu.telematics.java.App;
+
+import org.junit.Test;
+
+public class AppTest {
+
+    @Test
+    public void testJunitWorking() {
+        assertTrue(true);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    public void testPrimeFactors() {
+        assertEquals("0 has no prime factors", Collections.emptyList(), App.primeFactors(0));
+        assertEquals("1 has no prime factors", Collections.emptyList(), App.primeFactors(1));
+        assertEquals("-1 has no prime factors", Collections.emptyList(), App.primeFactors(-1));
+        assertEquals("2 is prime", Arrays.asList(2), App.primeFactors(2));
+        assertEquals("4 has 2 prime factors", Arrays.asList(2, 2), App.primeFactors(4));
+        assertEquals("many prime factors", Arrays.asList(2, 2, 2, 2, 3, 3, 5, 7, 11, 13), App.primeFactors(720720));
+        assertEquals("works with negative numbers", Arrays.asList(2, 3), App.primeFactors(-6));
+        assertEquals("maximum integer is prime", Arrays.asList(Integer.MAX_VALUE), App.primeFactors(Integer.MAX_VALUE));
+        assertEquals("minimum integer is -2^31", Collections.nCopies(31, 2), App.primeFactors(Integer.MIN_VALUE));
     }
 }
