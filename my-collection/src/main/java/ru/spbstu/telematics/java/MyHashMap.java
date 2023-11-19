@@ -3,7 +3,10 @@ package ru.spbstu.telematics.java;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MyHashMap<Key, Value> implements MyMap<Key, Value> {
+import java.util.Iterator;
+
+public class MyHashMap<Key, Value>
+        implements MyMap<Key, Value>, Iterable<MyMap.Entry<Key,Value>> {
 
     private static final int[] PRIME_CAPACITIES = {
                    53,        97,       193,       389,        769,     1543,     3079,
@@ -115,6 +118,44 @@ public class MyHashMap<Key, Value> implements MyMap<Key, Value> {
             }
         }
         return newTable;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<Entry<Key, Value>> iterator() {
+        return new Iterator<>() {
+            int index = 0;
+            Node node = table[0];
+
+            {
+                ensureBegin();
+            }
+
+            private void ensureBegin() {
+                while (node == null && index < table.length - 1) {
+                    index++;
+                    node = table[index];
+                }
+                assert !hasNext() || node != null;
+            }
+
+            @Override
+            public boolean hasNext() {
+                return !(index == table.length - 1 && node == null);
+            }
+
+            @Override
+            public Entry<Key, Value> next() {
+                final Node current = node;
+
+                if (node != null) {
+                    node = node.next;
+                }
+                ensureBegin();
+
+                return current;
+            }
+        };
     }
 
     private class Node implements MyMap.Entry<Key, Value> {
