@@ -17,4 +17,12 @@ public interface MyMap<Key, Value> {
     int size();
 
     boolean isEmpty();
+
+    interface Entry<Key, Value> {
+        @NotNull Key getKey();
+
+        @NotNull Value getValue();
+
+        @NotNull Value setValue(@NotNull Value value);
+    }
 }

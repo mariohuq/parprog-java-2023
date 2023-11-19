@@ -117,7 +117,7 @@ public class MyHashMap<Key, Value> implements MyMap<Key, Value> {
         return newTable;
     }
 
-    private class Node {
+    private class Node implements MyMap.Entry<Key, Value> {
         final Key key;
         final int hash;
         Value value;
@@ -183,6 +183,23 @@ public class MyHashMap<Key, Value> implements MyMap<Key, Value> {
 
         boolean matches(int hash, Key key) {
             return this.hash == hash && this.key.equals(key);
+        }
+
+        @Override
+        public @NotNull Key getKey() {
+            return key;
+        }
+
+        @Override
+        public @NotNull Value getValue() {
+            return value;
+        }
+
+        @Override
+        public @NotNull Value setValue(@NotNull Value value) {
+            final Value previous = this.value;
+            this.value = value;
+            return previous;
         }
     }
 }
