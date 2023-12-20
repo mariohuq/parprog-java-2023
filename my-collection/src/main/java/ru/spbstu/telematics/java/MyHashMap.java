@@ -86,7 +86,7 @@ public class MyHashMap<Key, Value>
         return table != null ? table.length : DEFAULT_INITIAL_CAPACITY;
     }
 
-    private int index(int hash) {
+    int index(int hash) {
         return Math.floorMod(hash, capacity());
     }
 
@@ -158,7 +158,7 @@ public class MyHashMap<Key, Value>
         };
     }
 
-    private class Node implements MyMap.Entry<Key, Value> {
+    class Node implements MyMap.Entry<Key, Value> {
         final Key key;
         final int hash;
         Value value;
@@ -241,6 +241,19 @@ public class MyHashMap<Key, Value>
             final Value previous = this.value;
             this.value = value;
             return previous;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return hash == node.hash;
+        }
+
+        @Override
+        public int hashCode() {
+            return hash;
         }
     }
 }
