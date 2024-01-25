@@ -23,8 +23,8 @@ public class BerriesField {
         BerriesField field = new BerriesField();
         Flags flags = new Flags();
         Neighbour[] neighbours = new Neighbour[] {
-                new Neighbour("A", flags, field),
-                new Neighbour("B", flags, field) };
+                new Neighbour(Flags.ALICE, flags, field),
+                new Neighbour(Flags.BOB, flags, field) };
         neighbours[0].start();
         neighbours[1].start();
         Thread.sleep(SIMULATION_TIME_MS);

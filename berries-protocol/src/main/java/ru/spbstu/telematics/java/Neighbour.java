@@ -26,28 +26,24 @@ public class Neighbour extends Thread {
             try {
                 Thread.sleep(random.nextInt(MAX_PAUSE_MS));
             } catch (InterruptedException e) {
+                System.err.println(name + " was interrupted between flag raises");
                 break;
             }
             flags.raise(name);
-            if (!flags.isOtherRaised(name)) {
-                try {
-                    System.out.println(name + " enters field");
-                    berriesCollected += field.harvest();
-                } catch (InterruptedException e) {
-                    break;
-                } finally {
-                    System.out.println(name + " left field");
-                    flags.lower(name);
-                }
+            if (flags.isOtherRaised(name)) {
+                flags.lower(name);
+                continue;
             }
-
+            System.out.println(name + " enters field");
             try {
-                Thread.sleep(random.nextInt(MAX_PAUSE_MS));
+                berriesCollected += field.harvest();
             } catch (InterruptedException e) {
+                System.err.println(name + " was interrupted while harvesting");
                 break;
+            } finally {
+                System.out.println(name + " left field");
+                flags.lower(name);
             }
-            flags.lower(name);
-
         }
         System.out.println(name + " collected " + berriesCollected + " berries.");
     }
